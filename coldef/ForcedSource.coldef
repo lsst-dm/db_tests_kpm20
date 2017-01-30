@@ -1,0 +1,13 @@
+deepSourceId
+scienceCcdExposureId
+psfFlux
+psfFluxSigma
+flagBadMeasCentroid
+flagPixEdge
+flagPixInterpAny
+flagPixInterpCen
+flagPixSaturAny
+flagPixSaturCen
+flagBadPsfFlux
+chunkId
+subChunkId
