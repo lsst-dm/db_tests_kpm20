@@ -1,0 +1,14 @@
+[table_info]
+tableName:       ForcedSource
+partitioning:    1
+schemaFile:      /sps/lsst/data/gapon/kpm20/ForcedSource.sql
+compression:     0
+subChunks:       0
+dirColName:      deepSourceId
+dirDb:           LSST20
+dirTable:        Object
+latColName:      decl
+lonColName:      ra
+lockInMem:       1
+scanRating:      0
+

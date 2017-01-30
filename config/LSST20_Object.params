@@ -1,0 +1,14 @@
+[table_info]
+tableName:       Object
+partitioning:    1
+schemaFile:      /sps/lsst/data/gapon/kpm20/Object.sql
+compression:     0
+subChunks:       1
+dirColName:      deepSourceId
+dirDb:           LSST20
+dirTable:        Object
+latColName:      decl
+lonColName:      ra
+lockInMem:       1
+scanRating:      0
+

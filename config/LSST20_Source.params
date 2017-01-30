@@ -1,0 +1,14 @@
+[table_info]
+tableName:       Source
+partitioning:    1
+schemaFile:      /sps/lsst/data/gapon/kpm20/Source.sql
+compression:     0
+subChunks:       0
+dirColName:      objectId
+dirDb:           LSST20
+dirTable:        Object
+latColName:      coord_decl
+lonColName:      coord_ra
+lockInMem:       1
+scanRating:      0
+
