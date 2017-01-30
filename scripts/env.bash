@@ -16,6 +16,7 @@ WORKERS=`seq --format 'ccqserv%3.0f' 126 149`
 
 QSERV_DATA_DIR='/qserv/data/kpm20'
 QSERV_MYSQL_DIR='/qserv/data/mysql'
+QSERV_DUMPS_DIR='/qserv/data/dumps'
 
 # Source and destination databases
 
