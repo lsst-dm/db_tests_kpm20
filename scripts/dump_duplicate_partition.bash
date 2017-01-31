@@ -12,8 +12,7 @@ SCRIPTS=`dirname $SCRIPT`
 source $SCRIPTS/env.bash
 
 cd $QSERV_DATA_DIR/chunks
-for chunks in `ls -1 chunks_*`;
-do
+for chunks in `ls -1 chunks_*`; do
     echo "Processing chunk: ${chunks} (async)"
     nohup ${SCRIPTS}/dump_duplicate_partition_chunks.bash ${chunks} \
       >& ${QSERV_DATA_DIR}/log/dump_duplicate_partition_chunks.${chunks}.log&

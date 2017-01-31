@@ -16,11 +16,10 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env.bash
 
-for chunk in `cat ${QSERV_DATA_DIR}/chunks/${chunks}`;
-do
+for chunk in `cat ${QSERV_DATA_DIR}/chunks/${chunks}`; do
     echo "Processing chunk: ${chunk}"
-    ${SCRIPTS}/dump_chunk.bash      ${chunk} >& ${QSERV_DATA_DIR}/log/dump.${chunk}.log
-    ${SCRIPTS}/duplicate_chunk.bash ${chunk} >& ${QSERV_DATA_DIR}/log/duplicate.${chunk}.log
-    ${SCRIPTS}/partition_chunk.bash ${chunk} >& ${QSERV_DATA_DIR}/log/partition.${chunk}.log
+    $SCRIPTS/dump_chunk.bash      $chunk >& $QSERV_DATA_DIR/log/dump.${chunk}.log
+    $SCRIPTS/duplicate_chunk.bash $chunk >& $QSERV_DATA_DIR/log/duplicate.${chunk}.log
+    $SCRIPTS/partition_chunk.bash $chunk >& $QSERV_DATA_DIR/log/partition.${chunk}.log
 done
 

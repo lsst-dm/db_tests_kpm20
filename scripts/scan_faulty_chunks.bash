@@ -14,15 +14,13 @@ source $SCRIPTS/env.bash
 
 partitions=''
 
-for c in `cat ${QSERV_DATA_DIR}/chunks.txt`;
-do
+for c in `cat ${QSERV_DATA_DIR}/chunks.txt`; do
   chunks=0
-  for f in `ls ${QSERV_DATA_DIR}/partitioned/${c}/Object/*.txt`;
-  do
+  for f in `ls ${QSERV_DATA_DIR}/partitioned/${c}/Object/*.txt`; do
     [[ ${f} =~ _overlap.txt$ ]] || let "chunks=chunks+1"
   done
   if [ "${chunks}" -gt "1" ]; then
-     echo ${c}
+     echo $c
      partitions="${partitions} ${c}"
   fi
 done
@@ -30,6 +28,6 @@ done
 if [ "${partitions}" != '' ]; then
   if [ "${verbose}" == "true" ]; then
     source $SCRIPTS/env_partition_stack.bash
-    sph-layout ${partitions}
+    sph-layout $partitions
   fi
 fi
