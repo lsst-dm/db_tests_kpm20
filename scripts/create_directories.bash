@@ -11,11 +11,9 @@ set -e
 SCRIPT=`realpath $0`
 SCRIPTS=`dirname $SCRIPT`
 
-$user=`whoami`
-
 source $SCRIPTS/env_base_stack.bash
 
 for d in $QSERV_DATA_DIR $QSERV_DUMPS_DIR; do
-  sudo mkdir -p $d
-  sudo chown $user $d
+  sudo -u qserv mkdir -p $d
+  sudo -u qserv chmod 0777 $d
 done
