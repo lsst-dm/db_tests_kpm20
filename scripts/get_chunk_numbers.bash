@@ -13,8 +13,16 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env_base_stack.bash
 
+cd $QSERV_DATA_DIR
+
 echo "\
 SELECT SUBSTR(TABLE_NAME,8) \
   FROM information_schema.tables \
   WHERE TABLE_SCHEMA='${INPUT_DB}' \
-  AND TABLE_NAME LIKE 'Object\_%' AND TABLE_ROWS > 0;" | $mysql_cmd | sort -n
+  AND TABLE_NAME LIKE 'Object\_%' AND TABLE_ROWS > 0;" | $mysql_cmd | sort -n \
+> chunks.txt
+
+rm -rf chunks
+mkdir  chunks
+cd     chunks
+cat ../chunks.txt | split -l 36 -d - chunks_
