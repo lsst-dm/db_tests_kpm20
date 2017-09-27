@@ -9,6 +9,8 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env_base_stack.bash
 
+mkdir -p $QSERV_LOCAL_LOG_DIR
+
 for node in $WORKERS; do
     ssh -n $node $SCRIPTS/create_directories.bash >& $QSERV_LOCAL_LOG_DIR/${node}_create_directories.log &
 done
