@@ -18,8 +18,8 @@ source $SCRIPTS/env.bash
 
 for chunk in `cat ${QSERV_DATA_DIR}/chunks/${chunks}`; do
     echo "Processing chunk: ${chunk}"
-    $SCRIPTS/dump_chunk.bash      $chunk >& $QSERV_DATA_DIR/log/dump.${chunk}.log
-    $SCRIPTS/duplicate_chunk.bash $chunk >& $QSERV_DATA_DIR/log/duplicate.${chunk}.log
-    $SCRIPTS/partition_chunk.bash $chunk >& $SHARED_DATA_DIR/log/partition.${HOSTNAME}.${chunk}.log
+    $SCRIPTS/dump_source_chunk.bash      $chunk >& $QSERV_DATA_DIR/log/dump_source.${chunk}.log
+    $SCRIPTS/duplicate_source_chunk.bash $chunk >& $QSERV_DATA_DIR/log/duplicate_source.${chunk}.log
+    $SCRIPTS/partition_chunk.bash $chunk >& $SHARED_DATA_DIR/log/partition_source.${HOSTNAME}.${chunk}.log
 done
 

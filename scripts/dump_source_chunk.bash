@@ -37,7 +37,7 @@ on_error() {
 
 trap on_error 0
 #for table in Object Source ForcedSource; do
-for table in Object; do
+for table in Object Source; do
     table_chunk="${table}_${chunk}"
     echo "Dumping: ${INPUT_DB} ${table_chunk}"
     ${mysqldump_cmd} ${INPUT_DB} ${table_chunk} -T${outdir}

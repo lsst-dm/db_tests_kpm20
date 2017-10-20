@@ -26,9 +26,14 @@ fi
 
 confdir="${SCRIPTS}/../config"
 indir="${datadir}/duplicated/${chunk}"
-outdir="${datadir}/partitioned/${chunk}"
+# Change output dir to shared storage.
+#outdir="${datadir}/partitioned/${chunk}"
+outdir="${SHARED_DATA_DIR}/partitioned/${chunk}"
 
-cmd="sph-partition --verbose -c ${confdir}/Object.cfg --out.dir=${outdir}/Object --in=${indir}/Object_${chunk}.txt"
+cmd_obj="sph-partition --verbose -c ${confdir}/Object.cfg --out.dir=${outdir}/Object --in=${indir}/Object_${chunk}.txt"
+
+cmd_src="sph-partition --verbose -c ${confdir}/common.cfg -c ${confdir}/Source.cfg --out.dir=${outdir}/Source --in=${indir}/Source_${chunk}.txt"
+
 
 rm  -rvf ${outdir}
 mkdir -p ${outdir}
@@ -38,20 +43,24 @@ mkdir -p ${outdir}/ForcedSource
 
 on_error() {
     echo "Cleaning up: '${outdir}'"
-    rm -rvf "${outdir}"
+    rm -rvf "${outdir}/Object"
     exit 1
 }
 
-echo "Partitioning chunk: ${chunk}"
+echo "Partitioning Object chunk: ${chunk}  ${cmd_obj}"
 trap on_error 0
-${cmd}
+${cmd_obj}
+
+echo "Partitioning Source chunk: ${chunk}  ${cmd_src}"
+${cmd_src}
 trap - 0
 
-mv ${indir}/Source_${chunk}.txt ${outdir}/Source/chunk_${chunk}.txt
-cp ${outdir}/Object/chunk_index.bin ${outdir}/Source/
+## Comment these out for now.
+#mv ${indir}/Source_${chunk}.txt ${outdir}/Source/chunk_${chunk}.txt
+#cp ${outdir}/Object/chunk_index.bin ${outdir}/Source/
 
-mv ${indir}/ForcedSource_${chunk}.txt ${outdir}/ForcedSource/chunk_${chunk}.txt
-cp ${outdir}/Object/chunk_index.bin ${outdir}/ForcedSource/
+#mv ${indir}/ForcedSource_${chunk}.txt ${outdir}/ForcedSource/chunk_${chunk}.txt
+#cp ${outdir}/Object/chunk_index.bin ${outdir}/ForcedSource/
 
-echo "Cleaning up: ${indir}"
-rm -rvf "${indir}"
+#echo "Cleaning up: ${indir}"
+#rm -rvf "${indir}"

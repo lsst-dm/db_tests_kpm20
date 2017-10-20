@@ -13,8 +13,8 @@ source $SCRIPTS/env.bash
 
 cd $QSERV_DATA_DIR/chunks
 for chunks in `ls -1 chunks_*`; do
-    echo "Processing chunk: ${chunks} (async)"
-    nohup ${SCRIPTS}/dump_duplicate_partition_chunks.bash ${chunks} \
-      >& ${SHARED_DATA_DIR}/log/dump_duplicate_partition_chunks.${HOSTNAME}.${chunks}.log&
+    echo "Processing Source chunk: ${chunks} (async)"
+    nohup ${SCRIPTS}/ddp_source_chunks.bash ${chunks} \
+      >& ${SHARED_DATA_DIR}/log/ddp_source_chunks.${HOSTNAME}.${chunks}.log&
 done
 

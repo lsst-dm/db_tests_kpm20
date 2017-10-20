@@ -27,8 +27,13 @@ outdir="${datadir}/duplicated/${chunk}"
 
 htm_level=9
 ra_shift=0.1
-cmd_coldef_opt="--dup.object -O ${coldefdir}/Object.coldef -S ${coldefdir}/Source.coldef -F ${coldefdir}/ForcedSource.coldef"
-cmd="sph-duplicate2 -v ${cmd_coldef_opt} -l ${htm_level} -i ${indir} -o ${outdir} -t ${ra_shift} -D -j 2 -N ${chunk}"
+cmd_coldef_opt="-O ${coldefdir}/Object.coldef -S ${coldefdir}/Source.coldef -F ${coldefdir}/ForcedSource.coldef"
+cmd_opts="${cmd_coldef_opt} -l ${htm_level} -i ${indir} -o ${outdir} -t ${ra_shift} -D -j 2 -N ${chunk}" 
+#cmd="sph-duplicate2 -v ${cmd_coldef_opt} -l ${htm_level} -i ${indir} -o ${outdir} -t ${ra_shift} -D -j 2 -N ${chunk}"
+cmd_obj="sph-duplicate2 -v --dup.object ${cmd_opts}"
+cmd_src="sph-duplicate2 -v --dup.source ${cmd_opts}"
+
+
 
 rm  -rvf ${outdir}
 mkdir -p ${outdir}
@@ -40,8 +45,11 @@ on_error() {
 }
 trap on_error 0
 
-echo "Duplicating chunk: ${chunk}  ${cmd}"
-${cmd}
+echo "Duplicating Object chunk: ${chunk}  ${cmd_obj}"
+${cmd_obj}
+
+echo "Duplicating Source chunk: ${chunk}  ${cmd_src}"
+${cmd_src}
 
 trap - 0
 echo "Cleaning up: '${indir}'"

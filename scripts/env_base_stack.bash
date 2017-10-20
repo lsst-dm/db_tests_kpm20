@@ -15,5 +15,5 @@ if [ -z "${SCRIPTS}" ]; then
 else
   source $SCRIPTS/env.bash
   source $BASE_STACK/loadLSST.bash
-  setup -t qserv-dev qserv_distrib
+  setup -N -t qserv-dev qserv_distrib
 fi
