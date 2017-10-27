@@ -34,6 +34,8 @@ cmd_obj="sph-partition --verbose -c ${confdir}/Object.cfg --out.dir=${outdir}/Ob
 
 cmd_src="sph-partition --verbose -c ${confdir}/common.cfg -c ${confdir}/Source.cfg --out.dir=${outdir}/Source --in=${indir}/Source_${chunk}.txt"
 
+cmd_fsrc="sph-partition --verbose -c ${confdir}/common.cfg -c ${confdir}/ForcedSource.cfg --out.dir=${outdir}/ForcedSource --in=${indir}/ForcedSource_${chunk}.txt"
+
 
 rm  -rvf ${outdir}
 mkdir -p ${outdir}
@@ -53,6 +55,10 @@ ${cmd_obj}
 
 echo "Partitioning Source chunk: ${chunk}  ${cmd_src}"
 ${cmd_src}
+
+echo "Partitioning ForcedSource chunk: ${chunk}  ${cmd_fsrc}"
+${cmd_fsrc}
+
 trap - 0
 
 ## Comment these out for now.
@@ -62,5 +68,5 @@ trap - 0
 #mv ${indir}/ForcedSource_${chunk}.txt ${outdir}/ForcedSource/chunk_${chunk}.txt
 #cp ${outdir}/Object/chunk_index.bin ${outdir}/ForcedSource/
 
-#echo "Cleaning up: ${indir}"
-#rm -rvf "${indir}"
+echo "Partitioning Cleaning up: ${chunk} ${indir}"
+rm -rvf "${indir}"

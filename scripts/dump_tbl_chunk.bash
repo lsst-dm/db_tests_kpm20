@@ -15,14 +15,8 @@ if [ -z "${chunk}" ]; then
     echo "usage: <chunk> [<datadir>]"
     exit 1
 fi
-datadir="$2"
-if [ -z "${datadir}" ]; then
-
-    # Assuming the default destination as per the current
-    # configuration of the processing pipeline.
-
-    datadir=$QSERV_DATA_DIR
-fi
+datadir=$QSERV_DATA_DIR
+table="$2"
 outdir="${datadir}/dumped/${chunk}"
 
 rm    -rvf ${outdir}
@@ -37,9 +31,7 @@ on_error() {
 
 trap on_error 0
 #for table in Object Source ForcedSource; do
-for table in Object Source ForcedSource; do
-    table_chunk="${table}_${chunk}"
-    echo "Dumping: ${mysqldump_cmd} ${INPUT_DB} ${table_chunk} -T${outdir}"
-    ${mysqldump_cmd} ${INPUT_DB} ${table_chunk} -T${outdir}
-done
+table_chunk="${table}_${chunk}"
+echo "Dumping: ${mysqldump_cmd} ${INPUT_DB} ${table_chunk} -T${outdir}"
+${mysqldump_cmd} ${INPUT_DB} ${table_chunk} -T${outdir}
 trap - 0

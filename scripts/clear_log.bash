@@ -13,8 +13,6 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env_base_stack.bash
 
-for d in $QSERV_DATA_DIR $QSERV_DATA_DIR/log $QSERV_DUMPS_DIR; do
-  sudo -u qserv mkdir -p $d
-  sudo -u qserv chmod 0777 $d
-#  rm -rf $d/*
+for d in $QSERV_DATA_DIR/log $QSERV_DUMPS_DIR; do
+  rm -rf $d/*
 done

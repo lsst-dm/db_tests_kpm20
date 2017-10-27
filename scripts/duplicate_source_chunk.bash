@@ -29,9 +29,9 @@ htm_level=9
 ra_shift=0.1
 cmd_coldef_opt="-O ${coldefdir}/Object.coldef -S ${coldefdir}/Source.coldef -F ${coldefdir}/ForcedSource.coldef"
 cmd_opts="${cmd_coldef_opt} -l ${htm_level} -i ${indir} -o ${outdir} -t ${ra_shift} -D -j 2 -N ${chunk}" 
-#cmd="sph-duplicate2 -v ${cmd_coldef_opt} -l ${htm_level} -i ${indir} -o ${outdir} -t ${ra_shift} -D -j 2 -N ${chunk}"
 cmd_obj="sph-duplicate2 -v --dup.object ${cmd_opts}"
 cmd_src="sph-duplicate2 -v --dup.source ${cmd_opts}"
+cmd_fsrc="sph-duplicate2 -v --dup.forcedsource ${cmd_opts}"
 
 
 
@@ -50,6 +50,10 @@ ${cmd_obj}
 
 echo "Duplicating Source chunk: ${chunk}  ${cmd_src}"
 ${cmd_src}
+
+echo "Duplicating ForcedSource chunk: ${chunk}  ${cmd_fsrc}"
+${cmd_fsrc}
+
 
 trap - 0
 echo "Cleaning up: '${indir}'"

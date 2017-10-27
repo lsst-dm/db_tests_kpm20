@@ -1,0 +1,43 @@
+env.sh (see directory above scripts) needs to have appropriate worker name 
+  ranges, directories, and so on.
+
+
+These are the scripts that need to be used, in the order they should be
+run. Indented names are scripts called by the above script and do not
+have to be called directly.
+
+
+0run_create_directories.bash
+0run_get_chunk_numbers.bash
+1run_ddp_obj_only.bash
+    ddp_tbl_only.bash Object --dup.object
+        ddp_tbl_only_chunks.bash  $table $option
+           dump_tbl_chunk.bash      $chunk $table $option
+           duplicate_tbl_chunk.bash $chunk $table $option  
+                          *** -j option sets number of duplicates.
+           partition_tbl_chunk.bash $chunk $table         
+
+
+*** Below script reads ${SHARED}/partitionedObjAll
+    This allows other scripts to be run with risking contamination of Object.
+2run_partitioned_count.bash
+    partitioned_obj_chunk_count.py
+
+4run_load.bash
+
+5run_ddp_src_only.bash
+
+4run_load.bash
+
+6run_ddp_fsrc_only.bash
+
+4run_load
+
+
+---Useful
+0run_clear_logs.bash
+monitor_dump_duplicate_partition.bash
+
+
+--- Below example does not need to be called.
+99run_ddp_all_tables.bash   
