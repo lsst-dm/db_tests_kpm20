@@ -43,7 +43,7 @@ cmd_tbl="sph-duplicate2 -v ${tableopt} ${cmd_opts}"
 
 
 
-rm  -rvf ${outdir}
+rm  -rvf ${outdir}/*.txt
 mkdir -p ${outdir}
 
 on_error() {

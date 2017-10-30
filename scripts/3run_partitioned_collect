@@ -9,11 +9,7 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env_base_stack.bash
 
-mkdir -p $QSERV_LOCAL_LOG_DIR
-
-mkdir -p $SHARED_DATA_DIR/partitioned
-mkdir -p $SHARED_DATA_DIR/log
 
 for node in $WORKERS; do
-    ssh -n $node $SCRIPTS/create_directories.bash >& $QSERV_LOCAL_LOG_DIR/${node}_create_directories.log &
+    ssh -n $node python $SCRIPTS/partitioned_obj_chunk_count.py collect ${SHARED_DATA_DIR}/partitioned ${QSERV_DATA_DIR}/loading >& $QSERV_LOCAL_LOG_DIR/collect.log &
 done
