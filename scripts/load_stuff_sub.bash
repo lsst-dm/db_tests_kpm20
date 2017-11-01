@@ -8,6 +8,7 @@
 set -e
 
 sourceDir="$1"
+table="$2"
 
 SCRIPT=`readlink -f $0`
 SCRIPTS=`dirname $SCRIPT`
@@ -21,8 +22,8 @@ config_dir="${SCRIPTS}/../config"
 
 opt_verbose="--verbose --verbose --verbose --verbose-all"
 opt_conn="--host=${MASTER} --port=5012 --secret=${config_dir}/wmgr.secret --no-css"
-opt_config="--config=${config_dir}/common.cfg --config=${config_dir}/Object.cfg"
-opt_db_table_schema="${OUTPUT_DB} Object ${config_dir}/Object.sql"
+opt_config="--config=${config_dir}/common.cfg --config=${config_dir}/${table}.cfg"
+opt_db_table_schema="${OUTPUT_DB} ${table} ${config_dir}/${table}.sql"
 
 opt_data="--index-db= --skip-partition --chunks-dir=${sourceDir}"
 
