@@ -27,6 +27,9 @@ for ((val=1;val<=dirCount;val++)); do
     cmdRm="rm -rf load${val}/*"
     echo "cmdRm: $cmdRm"
     $cmdRm
+    cmdT="touch load${val}/chunk_index.bin"
+    echo "cmdT: $cmdT"
+    $cmdT
 done
 
 count=`ls -1 *_chunk_* | wc -l`

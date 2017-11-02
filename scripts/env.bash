@@ -26,6 +26,7 @@ SHARED_DATA_DIR='/sps/lsst/data/jgates/data'
 
 INPUT_DB='LSST'
 OUTPUT_DB='LSST30'
+#OUTPUT_DB='LSSTTMP'
 
 # Shortcuts
 

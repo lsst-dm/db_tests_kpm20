@@ -1,9 +1,13 @@
-env.bash needs to have appropriate worker name ranges, directories, and so on.
+env.bash needs to have appropriate worker name ranges, directories, new database name, and so on.
 
 
 These are the scripts that need to be used, in the order they should be
 run. Indented names are scripts called by the above script and do not
 have to be called directly.
+
+# Create the new database (it will delete it if it exists)
+# set OUTPUT_DB=  in env.bash to the new name first, or you might be very unhappy.
+0run_create_database.bash
 
 # Create directories on nodes and shared storage.
 0run_create_directories.bash
@@ -52,8 +56,11 @@ cp partitionedObject/ccqserv* partitioned/.
 #Collect the Source input files on the correct nodes.
 6run_partitioned_collect.bash
 
+#Split into separate directories.
+7run_load_prep_Source.bash
+
 #Load the Source files into the database
-7run_load_Source.bash
+8run_load_Source.bash
 
 
 #### do it for ForcedSource.
