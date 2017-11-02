@@ -12,6 +12,8 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env_base_stack.bash
 
+table="Object"
+
 for node in $WORKERS; do
-    ssh -n $node $SCRIPTS/load_prep.bash ${QSERV_DATA_DIR}/partitioned >& $QSERV_LOCAL_LOG_DIR/${node}_load_prep.log &
+    ssh -n $node $SCRIPTS/load_stuff.bash ${QSERV_DATA_DIR}/loading${table} ${table} >& $QSERV_LOCAL_LOG_DIR/${node}_load_${table}.log &
 done

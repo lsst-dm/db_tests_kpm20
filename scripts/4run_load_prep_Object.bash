@@ -10,10 +10,10 @@ set -e
 SCRIPT=`realpath $0`
 SCRIPTS=`dirname $SCRIPT`
 
-source $SCRIPTS/env_base_stack.bash
-
 table="Object"
 
+source $SCRIPTS/env_base_stack.bash
+
 for node in $WORKERS; do
-    ssh -n $node $SCRIPTS/load_stuff.bash ${QSERV_DATA_DIR}/partitioned ${table} >& $QSERV_LOCAL_LOG_DIR/${node}_load_prep.log &
+    ssh -n $node $SCRIPTS/load_prep.bash ${QSERV_DATA_DIR}/loading${table} >& $QSERV_LOCAL_LOG_DIR/${node}_load_prep_${table}.log &
 done

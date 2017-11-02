@@ -1,14 +1,17 @@
-env.sh (see directory above scripts) needs to have appropriate worker name 
-  ranges, directories, and so on.
+env.bash needs to have appropriate worker name ranges, directories, and so on.
 
 
 These are the scripts that need to be used, in the order they should be
 run. Indented names are scripts called by the above script and do not
 have to be called directly.
 
-
+# Create directories on nodes and shared storage.
 0run_create_directories.bash
+
+# Collect chunk ids for chunks on individual hosts
 0run_get_chunk_numbers.bash
+
+# Dump, duplicate, and partition the Object table. File end up in {shared storage}/partitioned
 1run_ddp_obj_only.bash
     ddp_tbl_only.bash Object --dup.object
         ddp_tbl_only_chunks.bash  $table $option
@@ -17,17 +20,46 @@ have to be called directly.
                           *** -j option sets number of duplicates.
            partition_tbl_chunk.bash $chunk $table         
 
-
-*** Below script reads ${SHARED}/partitionedObjAll
-    This allows other scripts to be run with risking contamination of Object.
+# Find out all the chunk id numbers created by the partitoner, split them among files
+# representing each worker node. These files have the same name as the worker they belong to
+# such as: ccqserv101
 2run_partitioned_count.bash
     partitioned_obj_chunk_count.py
 
-4run_load.bash
+# Use the files created in the previous step to copy the files from shared storage
+# to the individual nodes.
+3run_partitioned_collect.bash       
 
-5run_ddp_src_only.bash
+#IMPORTANT - on the shared storage move partitioned to partitionedObject. The files for
+#            the chunks for each worker will be needed later. The other files can be deleted.
+cd /sps/lsst/data/jgates/data/
+mv partitioned partitionedObject
 
-4run_load.bash
+#Split the files to be loaded into 8 subdirectories using symbolic links, this allows eash multi-processing.
+4run_load_prep_Object.bash
+
+# Load the files making up the Object table into the database.
+5run_load_Object.bash
+
+#Dump, duplicate, and partition the Source table. (this can be done anytime after finishing step 3
+# and moving the files out of the way.)
+4run_ddp_src_only.bash
+
+#IMPORTANT - copy the files indicating which chunks go to which hosts to partitioned
+cd /sps/lsst/data/jgates/data/
+cp partitionedObject/ccqserv* partitioned/.
+
+#Collect the Source input files on the correct nodes.
+6run_partitioned_collect.bash
+
+#Load the Source files into the database
+7run_load_Source.bash
+
+
+#### do it for ForcedSource.
+
+
+
 
 6run_ddp_fsrc_only.bash
 

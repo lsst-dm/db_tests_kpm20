@@ -12,8 +12,8 @@ QSERV_PKG='/sps/lsst/data/jgates/development/qserv'
 MYSQL_PASSWORD='changeme'
 
 MASTER='ccqserv100'
-#WORKERS=`seq --format 'ccqserv%3.0f' 101 102`
-WORKERS=`seq --format 'ccqserv%3.0f' 101 124`
+WORKERS=`seq --format 'ccqserv%3.0f' 102 102`
+#WORKERS=`seq --format 'ccqserv%3.0f' 101 124`
 
 QSERV_DATA_DIR='/qserv/data/kpm30'
 QSERV_MYSQL_DIR='/qserv/data/mysql'
@@ -25,7 +25,7 @@ SHARED_DATA_DIR='/sps/lsst/data/jgates/data'
 # Source and destination databases
 
 INPUT_DB='LSST'
-OUTPUT_DB='LSSTTMP'
+OUTPUT_DB='LSST30'
 
 # Shortcuts
 
