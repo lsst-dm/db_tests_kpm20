@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# NOTE: This script is meant to be run on the development node ccqservbuild
+
+set -e
+
+SCRIPT=`realpath $0`
+SCRIPTS=`dirname $SCRIPT`
+
+source $SCRIPTS/env_base_stack.bash
+
+for node in $WORKERS; do
+    ssh -n $node killall dump_tbl_chunk.bash &
+    ssh -n $node killall sph-duplicate2  &
+done

@@ -9,6 +9,9 @@ have to be called directly.
 # set OUTPUT_DB=  in env.bash to the new name first, or you might be very unhappy.
 0run_create_database.bash
 
+# Check to see the output database was created on all nodes with 
+monitor_create.bash
+
 # Create directories on nodes and shared storage.
 0run_create_directories.bash
 
