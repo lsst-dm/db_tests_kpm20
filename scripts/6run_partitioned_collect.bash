@@ -12,5 +12,5 @@ source $SCRIPTS/env_base_stack.bash
 table="Source"
 
 for node in $WORKERS; do
-    ssh -n $node python $SCRIPTS/partitioned_obj_chunk_count.py collect ${SHARED_DATA_DIR}/partitioned ${QSERV_DATA_DIR}/loadingi${table} >& $QSERV_LOCAL_LOG_DIR/collect.log &
+    ssh -n $node python $SCRIPTS/partitioned_obj_chunk_count.py collect ${SHARED_DATA_DIR}/partitioned ${QSERV_DATA_DIR}/loading${table} ${table} >& $QSERV_LOCAL_LOG_DIR/${node}_collect.log &
 done

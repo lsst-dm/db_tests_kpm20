@@ -9,8 +9,9 @@ SCRIPTS=`dirname $SCRIPT`
 
 source $SCRIPTS/env_base_stack.bash
 
+table="Object"
 
-python partitioned_obj_chunk_count.py count 101 124 ${SHARED_DATA_DIR}/partitioned
+python partitioned_obj_chunk_count.py count 101 124 ${SHARED_DATA_DIR}/partitioned ${table}
 
 
 #for node in $WORKERS; do

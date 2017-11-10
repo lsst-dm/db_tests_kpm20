@@ -5,11 +5,14 @@ These are the scripts that need to be used, in the order they should be
 run. Indented names are scripts called by the above script and do not
 have to be called directly.
 
+monitor_ scripts help humans collect information that the previous operation is in progress, finished, 
+or has problems.
+
+
+
 # Create the new database (it will delete it if it exists)
 # set OUTPUT_DB=  in env.bash to the new name first, or you might be very unhappy.
 0run_create_database.bash
-
-# Check to see the output database was created on all nodes with 
 monitor_create.bash
 
 # Create directories on nodes and shared storage.
@@ -26,6 +29,7 @@ monitor_create.bash
            duplicate_tbl_chunk.bash $chunk $table $option  
                           *** -j option sets number of duplicates.
            partition_tbl_chunk.bash $chunk $table         
+monitor_dump_duplicate_partition.bash
 
 # Find out all the chunk id numbers created by the partitoner, split them among files
 # representing each worker node. These files have the same name as the worker they belong to
@@ -47,10 +51,12 @@ mv partitioned partitionedObject
 
 # Load the files making up the Object table into the database.
 5run_load_Object.bash
+monitor_loadObject.bash
 
 #Dump, duplicate, and partition the Source table. (this can be done anytime after finishing step 3
 # and moving the files out of the way.)
 4run_ddp_src_only.bash
+monitor_partitionSource.bash, monitor_dump_duplicate_partition.bash
 
 #IMPORTANT - copy the files indicating which chunks go to which hosts to partitioned
 cd /sps/lsst/data/jgates/data/

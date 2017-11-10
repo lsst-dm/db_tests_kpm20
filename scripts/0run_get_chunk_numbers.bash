@@ -10,5 +10,6 @@ SCRIPTS=`dirname $SCRIPT`
 source $SCRIPTS/env_base_stack.bash
 
 for node in $WORKERS; do
+    echo "node ${node}"
     ssh -n $node $SCRIPTS/get_chunk_numbers.bash >& $QSERV_LOCAL_LOG_DIR/${node}_get_chunk_numbers.log &
 done

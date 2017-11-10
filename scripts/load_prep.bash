@@ -18,7 +18,16 @@ source $SCRIPTS/env.bash
 
 cd $sourceDir
 echo $PWD
-dirCount=8
+
+# get rid of any load# directory
+for ((val=0;val<=9;val++)); do
+    cmdRm="rm -rf load${val}"
+    echo "cmdRm: $cmdRm"
+    $cmdRm
+done
+
+
+dirCount=3
 for ((val=1;val<=dirCount;val++)); do
     dirName="load${val}"
     cmdDir="mkdir -p load${val}"

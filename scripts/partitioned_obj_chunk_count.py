@@ -24,11 +24,13 @@ import sys
 #      probably local, so this gives the loader local files to work with.
 
 
-def find_chunks (dir_path):
+def find_chunks (dir_path, table):
     chunks = {}
     # This is related to code in collectChunks(), check if changes are made.
+    chunkGlob = "/" + table + "/chunk_*.txt"
+    print (dir_path, table, chunkGlob)
     for dir_chunk_path in glob.glob(dir_path + "/*"):
-        for file_path in glob.glob(dir_chunk_path + "/Object/chunk_*.txt"):
+        for file_path in glob.glob(dir_chunk_path + chunkGlob):
             file_name        = os.path.basename(file_path)
             file_name_no_ext = os.path.splitext(file_name)[0]
 
@@ -79,7 +81,7 @@ def countChunks(firstWorker, lastWorker, dir_path):
 
 
 
-def collectChunks(dir_path, destDir):
+def collectChunks(dir_path, destDir, table):
     '''Open the file with our host's name.
     Collect the list of chunk numbers in the file.
     Go through the directory and copy every file for those chunks
@@ -88,6 +90,7 @@ def collectChunks(dir_path, destDir):
     print(hName)
     fName = os.path.join(dir_path, hName)
     print fName
+    print table
     f = open(fName, 'r')
     targets = {}
     for line in f:
@@ -103,8 +106,9 @@ def collectChunks(dir_path, destDir):
     hits = 0
     total = 0
     # This is related to code in find_chunks(), check if changes are made.
+    chunkGlob = "/" + table + "/chunk_*.txt"
     for dir_chunk_path in glob.glob(dir_path + "/*"):
-        for file_path in glob.glob(dir_chunk_path + "/Object/chunk_*.txt"):
+        for file_path in glob.glob(dir_chunk_path + chunkGlob):
             total += 1
             file_name        = os.path.basename(file_path)
             file_name_no_ext = os.path.splitext(file_name)[0]
@@ -132,9 +136,9 @@ def collectChunks(dir_path, destDir):
 if __name__ == "__main__":
     la = len(sys.argv)
     a1 = sys.argv[1]
-    if not ((la == 4 and a1 == "collect") or (la == 5 and a1 == "count")):
-        print("usage: count <firstWorkerNum> <lastWorkerNum> <directory>")
-        print("usage: collect <sourceDirectory> <destinationDirectory>")
+    if not ((la == 5 and a1 == "collect") or (la == 6 and a1 == "count")):
+        print("usage: count <firstWorkerNum> <lastWorkerNum> <directory> <table>")
+        print("usage: collect <sourceDirectory> <destinationDirectory> <table>")
         print(sys.argv)
         sys.exit(1)
 
@@ -142,10 +146,12 @@ if __name__ == "__main__":
         firstWorker = int(sys.argv[2])
         lastWorker = int(sys.argv[3])
         dir_path = sys.argv[4]
-        countChunks(firstWorker, lastWorker, dir_path)
+        table = sys.argv[5]
+        countChunks(firstWorker, lastWorker, dir_path, table)
     elif a1 == "collect":
         dir_path = sys.argv[2]
         destDir = sys.argv[3]
-        collectChunks(dir_path, destDir)
+        table = sys.argv[4]
+        collectChunks(dir_path, destDir, table)
 
 

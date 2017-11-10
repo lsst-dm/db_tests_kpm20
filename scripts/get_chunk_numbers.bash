@@ -25,4 +25,4 @@ SELECT SUBSTR(TABLE_NAME,8) \
 rm -rf chunks
 mkdir  chunks
 cd     chunks
-cat ../chunks.txt | split -l 36 -d - chunks_
+cat ../chunks.txt | split -l 90 -d - chunks_
