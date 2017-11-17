@@ -18,6 +18,7 @@ for subDir in `ls -1d load*`; do
     cmd="${SCRIPTS}/load_stuff_sub.bash ${sourceDir}/${subDir} ${table}"
     echo $cmd
     $cmd >& $QSERV_DATA_DIR/log/load_stuff.${table}_${subDir}.log&
+    sleep 15
 done
 
 

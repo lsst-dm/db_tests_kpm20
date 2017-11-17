@@ -43,6 +43,24 @@ done
 
 count=`ls -1 *_chunk_* | wc -l`
 echo "count $count"
+#val=1
+#for chFile in `ls -1 *_chunk_*`; do
+#    destName="load${val}"
+#    wholePath="${sourceDir}/${chFile}"
+#    cmdLn="ln -s $wholePath ${destName}/$chFile"
+#    echo "linking $cmdLn"
+#    $cmdLn
+#
+#    val=$((val+1))
+#    if [ $val -gt $dirCount ]; then
+#        val=1
+#    fi
+#done
+
+# Try to group the files so that it is less likely 
+# to have two loaders trying to work on the same table.
+max_fcount=500
+fcount=0
 val=1
 for chFile in `ls -1 *_chunk_*`; do
     destName="load${val}"
@@ -51,9 +69,13 @@ for chFile in `ls -1 *_chunk_*`; do
     echo "linking $cmdLn"
     $cmdLn
 
-    val=$((val+1))
-    if [ $val -gt $dirCount ]; then
-        val=1
+    fcount=$((fcount+1))
+    if [ $fcount -gt $max_fcount ]; then
+        fcount=0
+        val=$((val+1))
+        if [ $val -gt $dirCount ]; then
+            val=1
+        fi
     fi
 done
 

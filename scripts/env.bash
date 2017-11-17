@@ -13,7 +13,6 @@ MYSQL_PASSWORD='changeme'
 
 MASTER='ccqserv100'
 WORKERS=`seq --format 'ccqserv%3.0f' 101 124`
-#WORKERS=`seq --format 'ccqserv%3.0f' 101 112`
 #WORKERS=`seq --format 'ccqserv%3.0f' 113 124`
 
 QSERV_DATA_DIR='/qserv/data/kpm30'
